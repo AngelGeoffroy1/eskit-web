@@ -247,8 +247,9 @@ h1 {
 
 /* Contact Section */
 .contact {
-    padding-top: 0;
-    margin-top: -3rem;
+    padding-top: 6rem;
+    position: relative;
+    margin-top: 200px;
 }
 
 .contact h2 {
@@ -595,6 +596,7 @@ html {
 /* Download Section */
 .download {
     padding: 4rem 1.5rem;
+    padding-bottom: 8rem;
 }
 
 .download h2 {
@@ -814,4 +816,14 @@ button:active ~ .cursor-dot {
     .features-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Spacer */
+.section-spacer {
+    height: 120px;
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    clear: both;
 }
