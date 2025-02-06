@@ -247,9 +247,9 @@ h1 {
 
 /* Contact Section */
 .contact {
-    padding-top: 6rem;
+    padding-top: 6rem !important;
     position: relative;
-    margin-top: 200px;
+    margin-top: 300px !important;
 }
 
 .contact h2 {
