@@ -153,8 +153,8 @@ h1 {
 
 /* Features */
 .features {
-    padding-bottom: 0;
-    margin-bottom: -4rem;
+    padding-bottom: 4rem;
+    margin-bottom: 0;
 }
 
 .features h2 {
@@ -247,9 +247,8 @@ h1 {
 
 /* Contact Section */
 .contact {
-    padding-top: 6rem !important;
-    position: relative;
-    margin-top: 300px !important;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 .contact h2 {
@@ -596,7 +595,6 @@ html {
 /* Download Section */
 .download {
     padding: 4rem 1.5rem;
-    padding-bottom: 8rem;
 }
 
 .download h2 {
@@ -816,14 +814,4 @@ button:active ~ .cursor-dot {
     .features-grid {
         grid-template-columns: 1fr;
     }
-}
-
-/* Spacer */
-.section-spacer {
-    height: 120px;
-    width: 100%;
-    display: block;
-    margin: 0;
-    padding: 0;
-    clear: both;
 }
