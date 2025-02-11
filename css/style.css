@@ -153,7 +153,7 @@ h1 {
 
 /* Features */
 .features {
-    padding-bottom: 4rem;
+    padding-bottom: 2rem;
     margin-bottom: 0;
 }
 
@@ -529,7 +529,7 @@ html {
 
 /* Testimonials Section */
 .testimonials {
-    padding: 4rem 1.5rem;
+    padding: 0rem 1.5rem 4rem 1.5rem;
 }
 
 .testimonials h2 {

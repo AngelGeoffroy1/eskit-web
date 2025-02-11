@@ -13,7 +13,7 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
-    "nodemailer": "^6.9.9"
+    "nodemailer": "^6.10.0"
   },
   "devDependencies": {
     "http-server": "^14.1.1"

@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gestion du formulaire de contact
     const contactForm = document.getElementById('contact-form');
+    const successMessage = document.querySelector('.success-message');
+
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -50,11 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = {
                 name: contactForm.querySelector('input[type="text"]').value,
                 email: contactForm.querySelector('input[type="email"]').value,
-                message: contactForm.querySelector('textarea').value
+                message: contactForm.querySelector('textarea').value,
+                to: 'bob@bobsarl.com'
             };
 
             try {
-                const response = await fetch('/send-email', {
+                const response = await fetch('https://arkitek-app.netlify.app/.netlify/functions/send-email', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -64,29 +67,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const data = await response.json();
 
-                if (data.success) {
-                    // Retirer la classe d'animation de chargement
-                    contactForm.classList.remove('sending');
-                    
-                    // Afficher le message de succès avec animation
-                    const successMessage = document.querySelector('.success-message');
-                    successMessage.classList.add('show');
-                    
-                    // Réinitialiser le formulaire
-                    contactForm.reset();
-                    
-                    // Cacher le message après 3 secondes
-                    setTimeout(() => {
-                        successMessage.classList.remove('show');
-                    }, 3000);
-                } else {
-                    contactForm.classList.remove('sending');
-                    alert('Erreur lors de l\'envoi du message : ' + data.message);
+                if (!response.ok) {
+                    throw new Error(data.message || `Erreur HTTP: ${response.status}`);
                 }
+
+                // Réinitialiser le formulaire
+                contactForm.reset();
+                
+                // Afficher le message de succès
+                successMessage.classList.add('show');
+                
+                // Cacher le message après 3 secondes
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 3000);
+                
             } catch (error) {
-                contactForm.classList.remove('sending');
                 console.error('Erreur:', error);
-                alert('Une erreur est survenue lors de l\'envoi du message.');
+                alert(`Une erreur est survenue lors de l'envoi du message: ${error.message}`);
+            } finally {
+                // Retirer la classe d'animation de chargement
+                contactForm.classList.remove('sending');
             }
         });
     }
@@ -146,40 +147,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let drawTimeout;
 
     document.addEventListener('mousemove', (e) => {
-        // Animation du point principal
-        cursorDot.style.left = e.clientX + 'px';
-        cursorDot.style.top = e.clientY + 'px';
-
-        // Création de l'effet de trait
-        const currentTime = Date.now();
-        const timeDiff = currentTime - lastTime;
-        if (lastX && lastY) {
-            const distance = Math.hypot(e.clientX - lastX, e.clientY - lastY);
-            const speed = distance / timeDiff; // Vitesse en pixels par milliseconde
-
-            if (speed > 0.2) { // Seuil de vitesse plus bas pour plus de réactivité
-                // Calculer l'angle du trait
-                const angle = Math.atan2(e.clientY - lastY, e.clientX - lastX);
-                const length = Math.min(distance * 1.5, 100); // Retour à la longueur originale
-                const thickness = Math.min(speed * 2, 3); // Retour à l'épaisseur originale
-
-                cursorLine.style.width = length + 'px';
-                cursorLine.style.left = lastX + 'px';
-                cursorLine.style.top = lastY + 'px';
-                cursorLine.style.transform = `rotate(${angle}rad) scaleY(${thickness})`; // Épaisseur variable selon la vitesse
-                cursorLine.style.opacity = Math.min(speed * 0.8, 0.8); // Retour à l'opacité originale
-
-                // Effet de disparition progressive
-                clearTimeout(drawTimeout);
-                drawTimeout = setTimeout(() => {
-                    cursorLine.style.opacity = '0';
-                }, 100);
-            }
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorLine = document.querySelector('.cursor-line');
+        
+        if (cursorDot) {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
         }
-
-        lastX = e.clientX;
-        lastY = e.clientY;
-        lastTime = currentTime;
+        
+        if (cursorLine) {
+            cursorLine.style.left = e.clientX + 'px';
+            cursorLine.style.top = e.clientY + 'px';
+        }
     });
 
     // Gestion des éléments interactifs
